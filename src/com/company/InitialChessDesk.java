@@ -67,6 +67,10 @@ public class InitialChessDesk {
         }
     }
 
+    public ArrayList<ChessDesk> getAllBeginings() {
+        return AllBeginings;
+    }
+
     public ChessDesk getChessDesk(int i) {
         return AllBeginings.get(i);
     }
