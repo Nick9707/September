@@ -3,9 +3,11 @@ package com.company;
 import java.util.ArrayList;
 
 public class FullDesk {
-    private ArrayList<ArrayList<ArrayList<Character>>> desk = new ArrayList<>(960);
-    private ArrayList<ArrayList<Character>> deskLength = new ArrayList<>(8);
-    private ArrayList<Character> deskWight = new ArrayList<>(8);
+    private ArrayList<ArrayList<ArrayList<String>>> desk = new ArrayList<>(960);
+    private ArrayList<ArrayList<String>> deskLength = new ArrayList<>(8);
+    private ArrayList<String> deskWight = new ArrayList<>(8);
+
+    private String figure = "";
 
     FullDesk(InitialChessDesk chessDesk) {
 
@@ -14,51 +16,65 @@ public class FullDesk {
                 deskLength.add(new ArrayList<>(deskWight));
             }
             for (int j = 0; j < 8; j++) {
-                deskLength.get(0).add(i.getChessFigur((byte) j));
-                deskLength.get(1).add('P');
-                deskLength.get(2).add('e');
-                deskLength.get(3).add('e');
-                deskLength.get(4).add('e');
-                deskLength.get(5).add('e');
-                deskLength.get(6).add('P');
-                deskLength.get(7).add(i.getChessFigur((byte) j));
+                figure = "w" + i.getChessFigur((byte) j);
+                deskLength.get(0).add(figure);
+                deskLength.get(1).add("wP");
+                deskLength.get(2).add("e");
+                deskLength.get(3).add("e");
+                deskLength.get(4).add("e");
+                deskLength.get(5).add("e");
+                deskLength.get(6).add("bP");
+                figure = new String();
+                figure += "b" + i.getChessFigur((byte) j);
+                deskLength.get(7).add(figure);
             }
             desk.add(new ArrayList<>(deskLength));
+            figure = "";
             deskLength.clear();
             deskWight.clear();
         }
     }
 
-    public ArrayList<ArrayList<ArrayList<Character>>> getDesk() {
+    public ArrayList<ArrayList<ArrayList<String>>> getDesk() {
         return desk;
     }
 
-    public ArrayList<ArrayList<Character>> getDeskLength() {
+    public ArrayList<ArrayList<String>> getDeskLength() {
         return deskLength;
     }
 
-    public ArrayList<Character> getDeskWight() {
+    public ArrayList<String> getDeskWight() {
         return deskWight;
     }
 
-    public void setDesk(ArrayList<ArrayList<ArrayList<Character>>> desk) {
+    public void setDesk(ArrayList<ArrayList<ArrayList<String>>> desk) {
         this.desk = desk;
     }
 
-    public void setDeskLength(ArrayList<ArrayList<Character>> deskLength) {
+    public void setDeskLength(ArrayList<ArrayList<String>> deskLength) {
         this.deskLength = deskLength;
     }
 
-    public void setDeskWight(ArrayList<Character> deskWight) {
+    public void setDeskWight(ArrayList<String> deskWight) {
         this.deskWight = deskWight;
     }
 
-    public void setFigure(int deskNumber, byte a, byte b, char figure) {
+    public void setFigure(int deskNumber, byte a, byte b, String figure) {
         desk.get(deskNumber).get(a).set(b, figure);
     }
 
-    public char getFigure(int deskNumber, byte a, byte b) {
+    public String getFigure(int deskNumber, byte a, byte b) {
         return desk.get(deskNumber).get(a).get(b);
+    }
+
+    public void removeFigure(ArrayList<ArrayList<String>> desk, int a, int b, int i, int j){
+        desk.get(i).set(j, desk.get(a).get(b));
+        desk.get(a).set(b, "e");
+    }
+
+    public void hitFigure(ArrayList<ArrayList<String>> desk, int a, int b, int i, int j){
+        desk.get(i).set(j, desk.get(a).get(b));
+        desk.get(a).set(b, "e");
     }
 
     public void show(int deskNumber) {
